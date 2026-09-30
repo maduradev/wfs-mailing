@@ -18,6 +18,7 @@
 - Metadata/hash file ada di database, file ada di private storage.
 - Signature memiliki versi/path unik. `letter_signatures` merekam relasi versi beserta snapshot nama/jabatan/path/hash. `letters.issued_snapshot` membekukan data yang dirender agar surat lama tidak berubah ketika profil atau signature diperbarui.
 - Nomor surat nullable selama draf dan unik saat diterbitkan; alokasi transactional melalui service akan dibuat pada tahap surat.
+- Nomor surat nullable selama draf dan unik saat diterbitkan; `LetterNumberService` mengalokasikan nomor dari counter jenis/tahun secara transaksional dan dipanggil saat penerbitan pada STEP 4.
 
 ## Penempatan
 

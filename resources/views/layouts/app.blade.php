@@ -20,6 +20,8 @@
                         <a class="hover:underline" href="{{ route('admin.users.index') }}">Pengguna</a>
                         <a class="hover:underline" href="{{ route('admin.departments.index') }}">Departemen</a>
                         <a class="hover:underline" href="{{ route('admin.positions.index') }}">Jabatan</a>
+                    @else
+                        <a class="hover:underline" href="{{ route('letters.index') }}">Surat</a>
                     @endif
                     <a class="hover:underline" href="{{ route(auth()->user()->role->value.'.profile') }}">Profil</a>
                     <form method="POST" action="{{ route('logout') }}">

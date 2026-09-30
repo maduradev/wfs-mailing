@@ -35,4 +35,11 @@
             </div>
         </section>
     @endif
+
+    @if ($user->role->value !== 'admin')
+        <section class="mt-8 border-t border-slate-200 pt-6" aria-labelledby="letter-access">
+            <h2 class="text-lg font-semibold" id="letter-access">Persuratan</h2>
+            <a class="mt-4 inline-block rounded border border-slate-300 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-100" href="{{ route('letters.index') }}">Buka daftar surat</a>
+        </section>
+    @endif
 @endsection

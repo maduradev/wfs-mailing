@@ -1,4 +1,5 @@
 | `letters` | Nomor nullable unik saat draf, jenis/status enum, pemohon/subjek, timestamp, path/hash dokumen dan snapshot JSON immutable saat terbit |
+| `letter_number_counters` | Nomor urut server-side unik per jenis surat dan tahun, diperbarui di dalam transaction |
 Signature di `storage/app/private/signatures/{user_id}/...`; lampiran dan PDF final di disk private. Database hanya menyimpan metadata. Versi menyimpan MIME `image/png`, ukuran, waktu, path unik, dan SHA-256. Surat menyimpan snapshot JSON semua data yang dirender, foreign key versi, snapshot path/hash/nama/jabatan/waktu, serta hash PDF. PDF surat terbit direproduksi dari snapshot, bukan profil aktif. File versi lama tidak dihapus selama dirujuk.
 # Rancangan Database
 
@@ -41,7 +42,7 @@ Signature di `storage/app/private/signatures/{user_id}/...`; lampiran dan PDF fi
 
 ## Nomor Surat
 
-Nomor dibuat server-side setelah persetujuan menurut format yang kelak ditetapkan perusahaan. Unique constraint menjadi pertahanan akhir terhadap duplikasi; service memakai transaction serta retry untuk benturan.
+`LetterNumberService` mengalokasikan nomor dari `letter_number_counters` secara transaksional dan row-lock, dengan unique key jenis/tahun sebagai pertahanan terhadap nomor ganda. Format dan prefix dikonfigurasi lewat `config/letters.php`; service disiapkan untuk dipanggil pada penerbitan setelah persetujuan di STEP 4.
 
 ## Data yang Belum Ditentukan
 
